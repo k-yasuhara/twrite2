@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -53,5 +54,12 @@ public class AuthController {
 		session.setAttribute("loginId", admin.getLoginId());
 		return "redirect:/top";
 	}
+	
+	@GetMapping("/logout")
+	public String getMethodName() {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 
 }
