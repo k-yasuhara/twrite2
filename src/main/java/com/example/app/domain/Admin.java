@@ -10,4 +10,7 @@ public class Admin {
 	private String loginId;
 	
 	private String loginPass;
+	
+	private String name;
+	private Integer id;
 }

@@ -23,6 +23,7 @@ public class AuthController {
 	private final HttpSession session;
 
 	@GetMapping
+	//urlの手打ち省略
 	public String startLogin() {
 		return "redirect:/login";
 	}
@@ -35,23 +36,29 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public String postLogin(
-			@Valid @ModelAttribute Admin admin,
+			@Valid @ModelAttribute Admin inputAdmin,
 			Errors errors,
 			Model m) {
-
+		
+		//入力エラーチェック
 		if (errors.hasErrors()) {
-			m.addAttribute("admin", admin);
+			m.addAttribute("admin", inputAdmin);
 			return "login";
 		}
-
-		if (!service.loginByIdAndPass(admin.getLoginId(), admin.getLoginPass())) {
+		
+		//idとpassチェック
+		if (!service.loginByIdAndPass(inputAdmin.getLoginId(), inputAdmin.getLoginPass())) {
 			m.addAttribute("errorMsg",
 					"不正なログインです");
-			m.addAttribute("admin", admin);
+			m.addAttribute("admin", inputAdmin);
 			return "login";
 		}
-
+		
+		//sessionにアカウント情報を格納
+		Admin admin =service.selectByIdAndPass(inputAdmin.getLoginId());
 		session.setAttribute("loginId", admin.getLoginId());
+		session.setAttribute("loginName", admin.getName());
+		session.setAttribute("loginNum", admin.getId());
 		return "redirect:/top";
 	}
 	
