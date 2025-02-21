@@ -6,6 +6,6 @@
 		select
 		*
 		from admins
-		where login_id = #{x}
+		where login_id COLLATE utf8mb4_bin = #{x}
 	</select>
 </mapper>
