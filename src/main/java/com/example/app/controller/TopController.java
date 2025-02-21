@@ -5,7 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jakarta.servlet.http.HttpSession;
+import com.example.app.service.RecordDBService;
+
 import lombok.RequiredArgsConstructor;
 
 
@@ -15,13 +16,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TopController {
 	
-	private final HttpSession session;
+	private final RecordDBService service;
 	
 	@GetMapping
 	public String getTop(Model m) {
+		m.addAttribute("recordCount", service.getCountsForTodayAndYesterday());
 		
-		
-		
+//		m.addAttribute("WeeklyCounts",service.getCountsForThisAndLasWeek());
 		
 		
 		
