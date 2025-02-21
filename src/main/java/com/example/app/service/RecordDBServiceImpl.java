@@ -70,7 +70,6 @@ public class RecordDBServiceImpl implements RecordDBService {
 				count.add(c);
 			}
 		}
-
 		return count;
 	}
 
