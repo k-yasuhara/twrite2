@@ -20,11 +20,16 @@ public class TopController {
 	
 	@GetMapping
 	public String getTop(Model m) {
+		
+		//相談件数
 		m.addAttribute("recordCount", service.getCountsForTodayAndYesterday());
 		
-//		m.addAttribute("WeeklyCounts",service.getCountsForThisAndLasWeek());
+		//相談傾向
 		
 		
+		//相談件数グラフ
+		m.addAttribute("thisWeeklyCounts", service.getCountsForThisWeek());
+		m.addAttribute("lastWeeklyCounts", service.getCountsForLastWeek());
 		
 		return "top";
 	}

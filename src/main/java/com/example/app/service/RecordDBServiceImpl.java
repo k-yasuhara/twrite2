@@ -1,8 +1,6 @@
 package com.example.app.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,29 +46,23 @@ public class RecordDBServiceImpl implements RecordDBService {
 	}
 
 	@Override
-	public List<Integer> getCountsForThisAndLasWeek() {
+	public List<Integer> getCountsForThisWeek() {
+		List<Integer> list = new ArrayList<>();
 
-		//今日の日付を取得
-		LocalDate today = LocalDate.now();
-
-		//今週の月曜を取得
-		LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-		LocalDate sunday = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-
-		List<RecordDB> lists = mp.selectAll();
-		List<Integer> count = new ArrayList<>();
-
-		for (RecordDB list : lists) {
-			LocalDate startAt = list.getStartAt();
-			int c = 0;
-			for (LocalDate date = monday; !date.isAfter(sunday); date.plusDays(1)) {
-				if (startAt.isEqual(date)) {
-					c++;
-				}
-				count.add(c);
-			}
+		for (int i = 1; i <= 7; ++i) {
+			list.add(mp.countLastAndThisWeek(i));
 		}
-		return count;
+		return list;
+	}
+
+	@Override
+	public List<Integer> getCountsForLastWeek() {
+		List<Integer> list = new ArrayList<>();
+
+		for (int i = -6; i <= 0; ++i) {
+			list.add(mp.countLastAndThisWeek(i));
+		}
+		return list;
 	}
 
 }

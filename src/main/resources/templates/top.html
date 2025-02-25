@@ -40,7 +40,6 @@
 			</div>
 			<!-- 相談傾向 -->
 		</div>
-
 		<div class="d-flex flex-row mb-3">
 			<div class="p-2 m-2 text-center fs-4 p-3 fw-bold shadow border-end border-bottom"
 				style="background-color: #f4f4f4;">
@@ -48,7 +47,7 @@
 				<div style="width: 500px;">
 					<canvas id="chart"></canvas>
 				</div>
-				<script th:object="${weeklyCounts}">
+				<script th:inline="javascript">
 					var ctx = document.getElementById("chart");
 					var myLineChart = new Chart(
 						ctx,
@@ -62,46 +61,13 @@
 								datasets: [
 									{
 										label: '今週の相談件数',
-										data: [
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-										],
+										data: [[${thisWeeklyCounts}]],
 										borderColor: "#ec4343",
 										backgroundColor: "#00000000"
 									},
 									{
 										label: '先週の相談件数',
-										data: [
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-											"0",
-
-
-										],
+										data: [[${lastWeeklyCounts}]],
 										borderColor: "#2260ea",
 										backgroundColor: "#00000000"
 									}],

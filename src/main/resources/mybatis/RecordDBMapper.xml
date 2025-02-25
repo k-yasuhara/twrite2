@@ -2,7 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.app.mapper.RecordDBMapper">
-	<select id="selectAll" resultType="RecordDB">
+	
+	<select id="selectAll"
+		resultType="com.example.app.domain.RecordDB">
 		select * from records
 	</select>
+
+	<select id="countLastAndThisWeek" parameterType="int"
+		resultType="int">
+		select count(*) from records
+		where
+		start_at between curdate() - interval (dayofweek(curdate())-1 -(#{x})) day
+		and
+		curdate() - interval (dayofweek(curdate())-2 -(#{x})) day;
+	</select>
+
 </mapper>
