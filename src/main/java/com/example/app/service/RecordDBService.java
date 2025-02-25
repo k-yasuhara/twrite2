@@ -8,6 +8,8 @@ public interface RecordDBService {
 	Integer[] getCountsForTodayAndYesterday();
 	
 	
+	
+	
 	//今週の相談件数を取得(月～日)
 	List<Integer> getCountsForThisWeek();
 	
