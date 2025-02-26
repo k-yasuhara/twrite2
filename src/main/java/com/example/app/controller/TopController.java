@@ -22,8 +22,11 @@ public class TopController {
 	public String getTop(Model m) {
 		
 		//相談件数
-		m.addAttribute("recordCount", service.getCountsForTodayAndYesterday());
+		int todayCount = service.getCountsForTodayAndYesterday()[0];
+		int yesterdayCount = service.getCountsForTodayAndYesterday()[1];
 		
+		m.addAttribute("todayCount", todayCount);
+		m.addAttribute("prevDiff", todayCount - yesterdayCount);
 		//相談傾向
 		
 		
