@@ -1,56 +1,68 @@
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            padding-top: 50px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        	font-family: Arial, sans-serif;
+        	margin: 0;
+        	padding: 0;
+        	padding-top: 50px;
+        	display: flex;
+        	flex-direction: column;
+        	height: 100vh;
         }
 
         .sidebar {
-            position: fixed;
-            height: 100%;
-            width: 210px;
-            background-color: #f4f4f4;
-            padding: 10px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        	position: fixed;
+        	height: 100%;
+        	width: 210px;
+        	background-color: #f4f4f4;
+        	padding: 10px;
+        	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar ul {
-            list-style: none;
-            padding: 0;
+        	list-style: none;
+        	padding: 0;
         }
 
         .sidebar ul li {
-            margin-bottom: 10px;
+        	margin-bottom: 10px;
         }
 
         .sidebar ul li a {
-            color: #333;
-            text-decoration: none;
+        	color: #333;
+        	text-decoration: none;
         }
 
         main {
-            flex: 1;
-            padding: 20px;
-            margin-left: 200px;
+        	flex: 1;
+        	padding: 20px;
+        	margin-left: 200px;
         }
 
         footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-left: 210px;
+        	background-color: #333;
+        	color: white;
+        	text-align: center;
+        	padding: 10px 0;
+        	margin-left: 210px;
         }
 
         .numberOfConsultations {
-            font-family: Verdana, Geneva, Tahoma, sans-serif ;
+        	font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
         select[readonly],
         input[type="radio"][readonly],
-        input[type="checkbox"][readonly]{
-            pointer-events:none;
+        input[type="checkbox"][readonly] {
+        	pointer-events: none;
+        }
+
+        .list-group {
+        	border: none;
+        	box-shadow: none;
+        	/* ボックスシャドウがある場合、影も削除 */
+        }
+
+        .list-group-item {
+        	border: none;
+        	background-color: transparent;
+        	/* 各リストアイテムの境界線を削除 */
         }

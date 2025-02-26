@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.RecordMapper">
+
+	<select id="selectAll"
+		resultType="com.example.app.domain.RecordDB">
+		select * from records
+	</select>
+
+	<select id="countLastAndThisWeek" parameterType="int"
+		resultType="int">
+		select count(*) from records
+		where
+		start_at between curdate()
+		- interval (dayofweek(curdate())-1 -(#{x})) day
+		and
+		curdate() - interval
+		(dayofweek(curdate())-2 -(#{x})) day;
+	</select>
+
+	<sql id="joinSymptoms">
+		select
+		symptoms_pattern.symptoms_name,count(symptoms.symptoms_id) as count
+		from records
+		join symptoms
+		on records.id = symptoms.records_id
+		join symptoms_pattern
+		on symptoms.symptoms_id = symptoms_pattern.id
+	</sql>
+
+	<select id="getTop3TodaySymptoms" resultMap="recordMap">
+		<include refid="joinSymptoms"></include>
+		where start_at between
+		curdate() and curdate() + interval 1 day
+		group by symptoms_id
+		;
+	</select>
+	
+	<select id="getTop3YesterdaySymptoms" resultMap="recordMap">
+		<include refid="joinSymptoms"></include>
+		where start_at between
+		curdate() - interval 1 day and curdate()
+		group by
+		symptoms_id
+		;
+	</select>
+	
+	<resultMap id="recordMap"
+		type="com.example.app.dto.SymptomsCount">
+		<result property="symptomsName" column="symptoms_name" />
+		<result property="count" column="count" />
+	</resultMap>
+	
+
+</mapper>

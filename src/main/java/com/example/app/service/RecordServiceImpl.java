@@ -8,15 +8,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.stereotype.Service;
 
 import com.example.app.domain.RecordDB;
-import com.example.app.mapper.RecordDBMapper;
+import com.example.app.dto.SymptomsCount;
+import com.example.app.mapper.RecordMapper;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RecordDBServiceImpl implements RecordDBService {
+public class RecordServiceImpl implements RecordService {
 
-	private final RecordDBMapper mp;
+	private final RecordMapper mp;
 
 	@Override
 	public Integer[] getCountsForTodayAndYesterday() {
@@ -64,5 +65,27 @@ public class RecordDBServiceImpl implements RecordDBService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<SymptomsCount> getTopSymptomsToday() {
+		List<SymptomsCount> todayList = mp.getTop3TodaySymptoms();
+		List<SymptomsCount> yesterdayList = mp.getTop3YesterdaySymptoms();
+		
+		for(SymptomsCount yl : yesterdayList) {
+			updateDiffYesterday(todayList,yl);
+		}
+		return todayList;
+	}
+
+	private void updateDiffYesterday(List<SymptomsCount> todayList, SymptomsCount yl) {
+		todayList.stream()
+				.filter(todaySymptom -> todaySymptom.getSymptomsName().equals(yl.getSymptomsName()))
+				.findFirst()
+				.ifPresent(todaySymptom -> {
+					todaySymptom.setDiffYesterday(todaySymptom.getCount() - yl.getCount());
+				});
+	}
+
+
 
 }
