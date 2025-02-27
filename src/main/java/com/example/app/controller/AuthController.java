@@ -59,7 +59,7 @@ public class AuthController {
 		session.setAttribute("loginId", admin.getLoginId());
 		session.setAttribute("loginName", admin.getName());
 		session.setAttribute("loginNum", admin.getId());
-		return "redirect:/top";
+		return "redirect:/Twrite/top";
 	}
 	
 	@GetMapping("/logout")

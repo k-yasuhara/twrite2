@@ -39,7 +39,7 @@
 	<nav id="sidebar" class="col-sm-2 d-sm-block bg-light sidebar border" th:fragment="sidebar">
 		<div class="position-sticky">
 			<ul class="nav flex-column py-2">
-				<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/top}"> <svg
+				<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/Twrite/top}"> <svg
 							xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="feather feather-home">
@@ -47,7 +47,7 @@
 							<polyline points="9 22 9 12 15 12 15 22"></polyline>
 						</svg> <span class="ms-2">ダッシュボード</span>
 					</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/register}">
+				<li class="nav-item"><a class="nav-link" th:href="@{/Twrite/register}">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
 							class="bi bi-pencil-square" viewBox="0 0 16 16">
 							<path
@@ -56,7 +56,7 @@
 								d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
 						</svg> <span class="ms-2">新規入力</span>
 					</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/list}">
+				<li class="nav-item"><a class="nav-link" th:href="@{/Twrite/list}">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
 							class="bi bi-book" viewBox="0 0 16 16">
 							<path
@@ -148,7 +148,9 @@
 		</div>
 	</nav>
 	<!-- end of サイドバー -->
-
+	
+	<p th:fragment="requiredLabel" class="col-form-label ms-3" style="color: red; width: 150px;">(必須)</p>
+	
 </body>
 
 </html>

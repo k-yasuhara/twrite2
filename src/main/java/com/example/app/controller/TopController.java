@@ -13,7 +13,7 @@ import com.example.app.service.RecordService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/top")
+@RequestMapping("/Twrite/top")
 @RequiredArgsConstructor
 public class TopController {
 

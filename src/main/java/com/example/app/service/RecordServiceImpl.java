@@ -9,8 +9,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.stereotype.Service;
 
 import com.example.app.domain.RecordDB;
+import com.example.app.domain.Staff;
 import com.example.app.dto.SymptomsCount;
 import com.example.app.mapper.RecordMapper;
+import com.example.app.mapper.StaffMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,12 +20,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecordServiceImpl implements RecordService {
 
-	private final RecordMapper mp;
+	private final RecordMapper recordMapper;
+	private final StaffMapper staffMapper;
 
 	@Override
 	public Integer[] getCountsForTodayAndYesterday() {
 
-		List<RecordDB> lists = mp.selectAll();
+		List<RecordDB> lists = recordMapper.selectAll();
 
 		// 今日と昨日の日付を事前に取得
 		LocalDate today = LocalDate.now();
@@ -52,7 +55,7 @@ public class RecordServiceImpl implements RecordService {
 		List<Integer> list = new ArrayList<>();
 
 		for (int i = 1; i <= 7; ++i) {
-			list.add(mp.countLastAndThisWeek(i));
+			list.add(recordMapper.countLastAndThisWeek(i));
 		}
 		return list;
 	}
@@ -62,15 +65,15 @@ public class RecordServiceImpl implements RecordService {
 		List<Integer> list = new ArrayList<>();
 
 		for (int i = -6; i <= 0; ++i) {
-			list.add(mp.countLastAndThisWeek(i));
+			list.add(recordMapper.countLastAndThisWeek(i));
 		}
 		return list;
 	}
 
 	@Override
 	public List<SymptomsCount> getTopSymptomsToday() {
-		List<SymptomsCount> todayList = mp.getTop3TodaySymptoms();
-		List<SymptomsCount> yesterdayList = mp.getTop3YesterdaySymptoms();
+		List<SymptomsCount> todayList = recordMapper.getTop3TodaySymptoms();
+		List<SymptomsCount> yesterdayList = recordMapper.getTop3YesterdaySymptoms();
 
 		for (SymptomsCount yl : yesterdayList) {
 			updateDiffYesterday(todayList, yl);
@@ -103,6 +106,11 @@ public class RecordServiceImpl implements RecordService {
 					}
 					todaySymptom.setDiffYesterdayString(diffString);
 				});
+	}
+
+	@Override
+	public List<Staff> getStaffType() {
+		return staffMapper.selectAll();
 	}
 
 }
