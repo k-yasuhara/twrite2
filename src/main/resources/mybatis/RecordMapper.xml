@@ -34,6 +34,7 @@
 		where start_at between
 		curdate() and curdate() + interval 1 day
 		group by symptoms_id
+		limit 3
 		;
 	</select>
 	

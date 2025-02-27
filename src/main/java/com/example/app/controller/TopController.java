@@ -35,7 +35,7 @@ public class TopController {
 
 		//相談傾向
 		List<SymptomsCount> todaySymptoms = service.getTopSymptomsToday();
-		System.out.println(todaySymptoms);
+
 		if (todaySymptoms != null) {
 			m.addAttribute("todaySymptoms", todaySymptoms);
 			

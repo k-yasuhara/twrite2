@@ -3,6 +3,7 @@ package com.example.app.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
@@ -70,9 +71,15 @@ public class RecordServiceImpl implements RecordService {
 	public List<SymptomsCount> getTopSymptomsToday() {
 		List<SymptomsCount> todayList = mp.getTop3TodaySymptoms();
 		List<SymptomsCount> yesterdayList = mp.getTop3YesterdaySymptoms();
-		
-		for(SymptomsCount yl : yesterdayList) {
-			updateDiffYesterday(todayList,yl);
+
+		for (SymptomsCount yl : yesterdayList) {
+			updateDiffYesterday(todayList, yl);
+		}
+
+		for (SymptomsCount tl : todayList) {
+			if (tl.getDiffYesterdayString() == null) {
+				tl.setDiffYesterdayString("+" + tl.getCount());
+			}
 		}
 		return todayList;
 	}
@@ -82,10 +89,20 @@ public class RecordServiceImpl implements RecordService {
 				.filter(todaySymptom -> todaySymptom.getSymptomsName().equals(yl.getSymptomsName()))
 				.findFirst()
 				.ifPresent(todaySymptom -> {
-					todaySymptom.setDiffYesterday(todaySymptom.getCount() - yl.getCount());
+					int todayCount = Optional.ofNullable(todaySymptom.getCount()).orElse(0);
+					int yesterdayCount = Optional.ofNullable(yl.getCount()).orElse(0);
+					int diff = todayCount - yesterdayCount;
+
+					String diffString;
+					if (diff > 0) {
+						diffString = "+" + diff;
+					} else if (diff < 0) {
+						diffString = "-" + diff;
+					} else {
+						diffString = "±0";
+					}
+					todaySymptom.setDiffYesterdayString(diffString);
 				});
 	}
-
-
 
 }

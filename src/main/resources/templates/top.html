@@ -30,12 +30,14 @@
 							[[${list.symptomsName}]]</p>
 					</div>
 					<div class="col-6">
-						<p class="fs-3 m-2 text-end">（[[${list.count}]]件 / [[${list.DiffYesterday}]]）</p>
+						<p class="fs-3 m-2 text-end">（[[${list.count}]]件 / [[${list.DiffYesterdayString}]]）</p>
 					</div>
 				</div>
-				<p>
-					errormsg出すところ
+
+				<p th:if="${msg}">
+					データがありません
 				</p>
+
 			</div>
 			<!-- 相談傾向 -->
 		</div>
