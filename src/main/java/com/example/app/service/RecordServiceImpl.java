@@ -97,7 +97,7 @@ public class RecordServiceImpl implements RecordService {
 					if (diff > 0) {
 						diffString = "+" + diff;
 					} else if (diff < 0) {
-						diffString = "-" + diff;
+						diffString = String.valueOf(diff);
 					} else {
 						diffString = "±0";
 					}

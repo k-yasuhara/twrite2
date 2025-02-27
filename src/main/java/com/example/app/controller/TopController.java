@@ -25,12 +25,15 @@ public class TopController {
 		//相談件数
 		int todayCount = service.getCountsForTodayAndYesterday()[0];
 		int yesterdayCount = service.getCountsForTodayAndYesterday()[1];
+		int diff = todayCount - yesterdayCount;
 
 		m.addAttribute("todayCount", todayCount);
-		if(todayCount - yesterdayCount == 0) {
-			m.addAttribute("prevDiff", "±0");			
-		}else {
-			m.addAttribute("prevDiff", todayCount - yesterdayCount);			
+		if (diff > 0) {
+			m.addAttribute("prevDiff", "+" + diff);
+		} else if (diff < 0) {
+			m.addAttribute("prevDiff", diff);
+		} else {
+			m.addAttribute("prevDiff", "±0");
 		}
 
 		//相談傾向
@@ -38,7 +41,7 @@ public class TopController {
 
 		if (todaySymptoms != null) {
 			m.addAttribute("todaySymptoms", todaySymptoms);
-			
+
 		} else {
 			m.addAttribute("msg", "本日のデータがありません");
 		}
