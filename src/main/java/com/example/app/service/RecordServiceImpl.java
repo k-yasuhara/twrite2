@@ -8,11 +8,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
 
+import com.example.app.domain.Patient;
 import com.example.app.domain.RecordDB;
 import com.example.app.domain.Staff;
+import com.example.app.domain.SymptomsPattern;
 import com.example.app.dto.SymptomsCount;
+import com.example.app.mapper.PatientMapper;
 import com.example.app.mapper.RecordMapper;
 import com.example.app.mapper.StaffMapper;
+import com.example.app.mapper.SymptomPatternMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +26,8 @@ public class RecordServiceImpl implements RecordService {
 
 	private final RecordMapper recordMapper;
 	private final StaffMapper staffMapper;
+	private final PatientMapper patientMapper;
+	private final SymptomPatternMapper symptomPatternMapper;
 
 	@Override
 	public Integer[] getCountsForTodayAndYesterday() {
@@ -38,7 +44,7 @@ public class RecordServiceImpl implements RecordService {
 
 		// forEachメソッドを使用してカウント
 		lists.forEach(list -> {
-			LocalDate startAt = list.getStartAt();
+			LocalDate startAt = list.getStartAt().toLocalDate();
 			if (startAt.isEqual(today)) {
 				todayCount.incrementAndGet();
 			} else if (startAt.isEqual(yesterday)) {
@@ -114,6 +120,16 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public List<Staff> getStaffType() {
 		return staffMapper.selectAll();
+	}
+
+	@Override
+	public List<Patient> getPatientType() {
+		return patientMapper.selectAll();
+	}
+
+	@Override
+	public List<SymptomsPattern> getSymptomType() {
+		return symptomPatternMapper.selectAll();
 	}
 
 }

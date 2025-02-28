@@ -1,5 +1,9 @@
 package com.example.app.mapper;
 
-public interface PatientMapper {
+import java.util.List;
 
+import com.example.app.domain.Patient;
+
+public interface PatientMapper {
+	List<Patient> selectAll();
 }

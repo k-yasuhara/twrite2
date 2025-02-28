@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" th:replace="~{common::layout(~{::body/content()},'トップページ')}">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" th:replace="~{common::layout(~{::body/content()},'新規入力')}">
 
 <body>
 	<!-- main -->
@@ -14,6 +14,8 @@
 		<h1 class="h2 fw-bold">◆新規入力</h1>
 
 		<form method="post" th:object="${record}">
+			<input type="hidden" name="registerId" th:value="${session.loginNum}">
+
 			<!-- 相談開始時間 -->
 			<div class="row my-3">
 				<!-- label枠 -->
@@ -32,7 +34,123 @@
 			</div>
 			<!-- end of 相談開始時間  -->
 
-			
+			<!-- スタッフ名 -->
+			<div class="row mb-3">
+				<!-- label枠 -->
+				<div class="col-sm-2 ms-3 py-2 bg-body-secondary">
+					<div class="row">
+						<label for="starff_id" class="col col-form-label ms-3 fw-bold">スタッフ名</label>
+						<div th:replace="~{parts :: requiredLabel}"></div>
+					</div>
+				</div>
+				<!-- end of label枠 -->
+				<div class="col-sm-auto ms-3 py-2">
+					<select class="form-select" id="staff_id" required th:field="*{staff.id}">
+						<option th:unless="*{staff.id}" value="" disabled selected>選択してください</option>
+						<option th:each="staffType : ${staffType}" th:value="${staffType.id}"
+							th:text="${staffType.name}"></option>
+					</select>
+				</div>
+			</div>
+			<!-- end of スタッフ名 -->
+
+			<!-- 急病者続柄 -->
+			<div class="row mb-3">
+				<!-- label枠 -->
+				<div class="col-sm-2 ms-3 py-2 bg-body-secondary">
+					<div class="row">
+						<label for="patient_pattern" class="col col-form-label ms-3 fw-bold">急病者 側柄</label>
+						<div th:replace="~{parts :: requiredLabel}"></div>
+
+					</div>
+				</div>
+				<!-- end of label枠 -->
+				<div class="col-sm-auto ms-3 py-2">
+					<select class="form-select" id="patient_pattern" required th:field="*{patient.id}">
+						<option th:unless="*{patient.id}" value="" disabled selected>選択してください</option>
+
+						<option th:each="patientType: ${patientType}" th:value="${patientType.id}"
+							th:text="${patientType.attribute}"></option>
+					</select>
+				</div>
+			</div>
+			<!-- end of 急病者続柄 -->
+
+			<!-- 症状種別 -->
+			<div class="row mb-3">
+				<!-- label枠 -->
+				<div class="col-sm-2 ms-3 py-2 bg-body-secondary">
+					<div class="row">
+						<label class="col-form-label ms-3 fw-bold">症状種別</label>
+					</div>
+				</div>
+				<!-- end of label枠 -->
+				<div class="col-sm-auto form-check ms-3 py-2">
+					<div class="form-check mb-2" th:each=" symptomType : ${symptomType}">
+						<input class="form-check-input" type="checkbox" 
+							 th:field="*{symptoms}"
+							th:value="${symptomType.id}"
+							th:id="${symptomType.symptomsName}">
+
+						<label class="form-check-label" th:text="${symptomType.symptomsName}"
+							th:for="${symptomType.symptomsName}"></label>
+					</div>
+
+				</div>
+			</div>
+			<!-- end of 症状種別 -->
+
+			<!-- 相談内容 -->
+			<div class="row mb-3">
+				<!-- label枠 -->
+				<div class="col-sm-2 ms-3 py-2 bg-body-secondary">
+					<div class="row">
+						<label th:for="consultation" class="col col-form-label ms-3 fw-bold">相談内容</label>
+					</div>
+				</div>
+				<!-- end of label枠 -->
+				<div class="ms-3 py-2" style="width: 500px;">
+					<textarea class="form-control" id="consultation" rows="3" th:field="*{consultation}"
+						th:text="*{consultation}"></textarea>
+				</div>
+			</div>
+			<!-- end of 相談内容 -->
+
+			<!-- 対応内容 -->
+			<div class="row mb-3">
+				<!-- label枠 -->
+				<div class="col-sm-2 ms-3 py-2 bg-body-secondary">
+					<div class="row">
+						<label for="response" class="col col-form-label ms-3 fw-bold">対応内容</label>
+					</div>
+				</div>
+				<!-- end of label枠 -->
+				<div class="ms-3 py-2" style="width: 500px;">
+					<textarea class="form-control" id="response" rows="3" th:field="*{response}"
+						th:text="*{response}"></textarea>
+				</div>
+			</div>
+			<!-- end of 対応内容 -->
+
+			<!-- 相談終了時間 -->
+			<div class="row my-3">
+				<!-- label枠 -->
+				<div class="col-sm-2 ms-3 py-2 bg-body-secondary">
+					<div class="row">
+						<label for="end_at" class="col col-form-label ms-3 fw-bold">相談終了時間</label>
+
+						<div th:replace="~{parts :: requiredLabel}"></div>
+					</div>
+				</div>
+				<!-- end of label枠 -->
+				<div class="col-sm-auto ms-3 py-2">
+					<input type="datetime-local" class="form-control" id="end_at" th:field="*{endAt}"
+						th:value="*{endAt}" required>
+				</div>
+			</div>
+			<!-- end of 相談終了時間  -->
+
+
 
 			<button type="submit" class="btn btn-primary ms-1 mb-3">確定</button>
 		</form>
