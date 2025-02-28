@@ -73,6 +73,9 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public List<SymptomsCount> getTopSymptomsToday() {
 		List<SymptomsCount> todayList = recordMapper.getTop3TodaySymptoms();
+		if(todayList.isEmpty()) {
+			return null;		
+		}
 		List<SymptomsCount> yesterdayList = recordMapper.getTop3YesterdaySymptoms();
 
 		for (SymptomsCount yl : yesterdayList) {
