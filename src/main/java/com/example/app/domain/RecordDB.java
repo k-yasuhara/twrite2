@@ -21,7 +21,7 @@ public class RecordDB {
 	private LocalDateTime endAt;
 		
 	
-	private Integer patientPattern;
+//	private Integer patientPattern;
 	private String consultation;
 	private String response;
 	

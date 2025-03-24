@@ -34,9 +34,9 @@ public class RecordController {
 	public String postRegister(
 			@ModelAttribute RecordDB recordForm,
 			Model m) {
-
+				
 		System.out.println(recordForm);
-
+		service.addRecord(recordForm);
 		return "redirect:/Twrite/top";
 	}
 

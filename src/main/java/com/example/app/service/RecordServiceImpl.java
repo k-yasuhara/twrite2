@@ -132,4 +132,9 @@ public class RecordServiceImpl implements RecordService {
 		return symptomPatternMapper.selectAll();
 	}
 
+	@Override
+	public void addRecord(RecordDB r) {
+		recordMapper.insert(r);
+	}
+
 }

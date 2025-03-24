@@ -25,7 +25,8 @@
 		from records
 		join symptoms
 		on records.id = symptoms.records_id
-		join symptoms_pattern
+		join
+		symptoms_pattern
 		on symptoms.symptoms_id = symptoms_pattern.id
 	</sql>
 
@@ -33,11 +34,12 @@
 		<include refid="joinSymptoms"></include>
 		where start_at between
 		curdate() and curdate() + interval 1 day
-		group by symptoms_id
+		group by
+		symptoms_id
 		limit 3
 		;
 	</select>
-	
+
 	<select id="getTop3YesterdaySymptoms" resultMap="recordMap">
 		<include refid="joinSymptoms"></include>
 		where start_at between
@@ -46,12 +48,23 @@
 		symptoms_id
 		;
 	</select>
-	
+
 	<resultMap id="recordMap"
 		type="com.example.app.dto.SymptomsCount">
 		<result property="symptomsName" column="symptoms_name" />
 		<result property="count" column="count" />
 	</resultMap>
-	
+	<insert id="insert"
+		parameterType="com.example.app.domain.RecordDB">
+		insert into records 
+		(register_id, registered_at,
+		updated_at,start_at,end_at,
+		patient_pattern,consultation,
+		response,staff_id)
+		values (#{registerId},now(),now(),
+		replace(#{startAt},'T',' '),
+		replace(#{endAt},'T',' '),
+		#{patient.id},#{consultation},#{response},#{staff.id});
+	</insert>
 
 </mapper>
