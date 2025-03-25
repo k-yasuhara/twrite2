@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.SymptomsMapper">
+	<insert id="insert">
+		insert into symptoms (records_id,symptoms_id)
+		values(#{records_id},#{symptoms_id});
+	</insert>
+</mapper>

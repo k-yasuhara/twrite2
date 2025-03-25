@@ -1,5 +1,7 @@
 package com.example.app.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +36,17 @@ public class RecordController {
 	public String postRegister(
 			@ModelAttribute RecordDB recordForm,
 			Model m) {
-				
+
 		System.out.println(recordForm);
-		service.addRecord(recordForm);
+		Integer recordsId = service.addRecord(recordForm);
+
+		if (!recordForm.getSymptoms().isEmpty()) {
+			List<Integer> symptomsList = recordForm.getSymptoms();
+			for (Integer symptoms : symptomsList) {
+				service.addSymptoms(recordsId, symptoms);
+			}
+		}
+
 		return "redirect:/Twrite/top";
 	}
 

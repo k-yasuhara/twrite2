@@ -17,6 +17,7 @@ import com.example.app.mapper.PatientMapper;
 import com.example.app.mapper.RecordMapper;
 import com.example.app.mapper.StaffMapper;
 import com.example.app.mapper.SymptomPatternMapper;
+import com.example.app.mapper.SymptomsMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,7 @@ public class RecordServiceImpl implements RecordService {
 	private final StaffMapper staffMapper;
 	private final PatientMapper patientMapper;
 	private final SymptomPatternMapper symptomPatternMapper;
+	private final SymptomsMapper symptomsMapper;
 
 	@Override
 	public Integer[] getCountsForTodayAndYesterday() {
@@ -79,8 +81,8 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public List<SymptomsCount> getTopSymptomsToday() {
 		List<SymptomsCount> todayList = recordMapper.getTop3TodaySymptoms();
-		if(todayList.isEmpty()) {
-			return null;		
+		if (todayList.isEmpty()) {
+			return null;
 		}
 		List<SymptomsCount> yesterdayList = recordMapper.getTop3YesterdaySymptoms();
 
@@ -133,8 +135,14 @@ public class RecordServiceImpl implements RecordService {
 	}
 
 	@Override
-	public void addRecord(RecordDB r) {
+	public Integer addRecord(RecordDB r) {
 		recordMapper.insert(r);
+		return recordMapper.getLastInsertId();
+	}
+
+	@Override
+	public void addSymptoms(int recordsId, int symptomsId) {
+		symptomsMapper.insert(recordsId, symptomsId);
 	}
 
 }

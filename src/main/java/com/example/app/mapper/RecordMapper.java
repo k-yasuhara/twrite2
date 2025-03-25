@@ -6,21 +6,24 @@ import com.example.app.domain.RecordDB;
 import com.example.app.dto.SymptomsCount;
 
 public interface RecordMapper {
-	
-	List<RecordDB> selectAll();
-	
-	RecordDB selectById(int id);
-	
-	void insert(RecordDB r);
-	
-	void update(RecordDB r);
-	
-	void delete(RecordDB r);
-	
-	int countLastAndThisWeek(int num);
-	
-	List<SymptomsCount>getTop3TodaySymptoms();
-	List<SymptomsCount>getTop3YesterdaySymptoms();
 
-	
+	List<RecordDB> selectAll();
+
+	RecordDB selectById(int id);
+
+	void insert(RecordDB r);
+
+	void update(RecordDB r);
+
+	void delete(RecordDB r);
+
+	int countLastAndThisWeek(int num);
+
+	List<SymptomsCount> getTop3TodaySymptoms();
+
+	List<SymptomsCount> getTop3YesterdaySymptoms();
+
+	//insertした自動採番を取得
+	Integer getLastInsertId();
+
 }

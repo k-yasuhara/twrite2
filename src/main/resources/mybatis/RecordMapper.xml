@@ -56,15 +56,19 @@
 	</resultMap>
 	<insert id="insert"
 		parameterType="com.example.app.domain.RecordDB">
-		insert into records 
+		insert into records
 		(register_id, registered_at,
 		updated_at,start_at,end_at,
 		patient_pattern,consultation,
 		response,staff_id)
-		values (#{registerId},now(),now(),
+		values
+		(#{registerId},now(),now(),
 		replace(#{startAt},'T',' '),
 		replace(#{endAt},'T',' '),
 		#{patient.id},#{consultation},#{response},#{staff.id});
 	</insert>
-
+	
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID();
+	</select>
 </mapper>

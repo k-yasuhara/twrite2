@@ -30,7 +30,11 @@ public interface RecordService {
 
 	//症状情報の取得
 	List<SymptomsPattern> getSymptomType();
-	
+
 	//記録の登録
-	void addRecord(RecordDB r);
+	Integer addRecord(RecordDB r);
+
+	//記録の登録（症状）
+	void addSymptoms(int recordsId, int symptomsId);
+	
 }
