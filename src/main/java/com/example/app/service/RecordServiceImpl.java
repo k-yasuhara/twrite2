@@ -145,4 +145,9 @@ public class RecordServiceImpl implements RecordService {
 		symptomsMapper.insert(recordsId, symptomsId);
 	}
 
+	@Override
+	public List<RecordDB> getRecordsWithDetails() {
+		return recordMapper.selectAllRecordsWithDetails();
+	}
+
 }

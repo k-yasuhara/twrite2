@@ -36,8 +36,7 @@ public class RecordController {
 	public String postRegister(
 			@ModelAttribute RecordDB recordForm,
 			Model m) {
-
-		System.out.println(recordForm);
+		
 		Integer recordsId = service.addRecord(recordForm);
 
 		if (!recordForm.getSymptoms().isEmpty()) {
@@ -51,8 +50,11 @@ public class RecordController {
 	}
 
 	@GetMapping("/list")
-	public String getviewlist() {
-		return "";
+	public String getviewlist(Model m) {
+		m.addAttribute("title", "全ての記録");
+		m.addAttribute("recordList", service.getRecordsWithDetails());
+		System.out.println(service.getRecordsWithDetails());
+		return "/record/list";
 	}
 
 }

@@ -25,5 +25,6 @@ public interface RecordMapper {
 
 	//insertした自動採番を取得
 	Integer getLastInsertId();
-
+	
+	List<RecordDB> selectAllRecordsWithDetails();
 }
