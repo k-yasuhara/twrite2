@@ -78,15 +78,28 @@
 		group by r.id;
 	</select>
 
-	<select id="findUnapprovedRecords"
-		resultMap="recordDetailsMap">
-		<include refid="joinSql"></include>
-		<if test=""></if>
-		where r.register_id = 1 and r.approval_status is null 
-		group by r.id; 
+	<select id="findUnapprovedRecords" resultMap="recordDetailsMap">
+		<include refid="joinSql" />
+		<choose>
+			<!-- approval == null かつ loginNum != 2 の場合 -->
+			<when test="approval == null and loginNum != 2">
+				where r.register_id = 1 and r.approval_status is null
+				group by r.id;
+			</when>
+			<!-- approval == null かつ loginNum == 2 の場合 -->
+			<when test="approval == null">
+				where r.approval_status is null
+				group by r.id;
+			</when>
+			<!-- その他の場合 -->
+			<otherwise>
+			</otherwise>
+		</choose>
 	</select>
-	
-	
+
+
+
+
 
 	<resultMap id="recordDetailsMap"
 		type="com.example.app.domain.RecordDB">

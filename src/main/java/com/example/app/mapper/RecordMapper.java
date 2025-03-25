@@ -2,6 +2,8 @@ package com.example.app.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.example.app.domain.RecordDB;
 import com.example.app.dto.SymptomsCount;
 
@@ -30,6 +32,8 @@ public interface RecordMapper {
 	List<RecordDB> selectAllRecordsWithDetails();
 	
 	//一覧画面（未承認）用
-	List<RecordDB> findUnapprovedRecords();
+	List<RecordDB> findUnapprovedRecords(
+			@Param("loginNum") Integer loginNum,
+			@Param("approval") Integer approval);
 	
 }

@@ -151,8 +151,8 @@ public class RecordServiceImpl implements RecordService {
 	}
 
 	@Override
-	public List<RecordDB> getUnapprovedRecords() {
-		return recordMapper.findUnapprovedRecords();
+	public List<RecordDB> getUnapprovedRecords(Integer loginNum , Integer approval) {
+		return recordMapper.findUnapprovedRecords(loginNum, approval);
 	}
 
 }

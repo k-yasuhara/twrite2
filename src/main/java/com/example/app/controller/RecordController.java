@@ -71,12 +71,13 @@ public class RecordController {
 		
 		if(approval == null) {
 			m.addAttribute("title", "未承認");
-			
-			
+			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));
+			return "/record/list";
+		}else {
+			m.addAttribute("recordList", service.getRecordsWithDetails());			
 		}
 		
 		
-		m.addAttribute("recordList", service.getRecordsWithDetails());
 		
 		return "/record/list";
 	}
