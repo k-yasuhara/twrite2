@@ -77,6 +77,17 @@
 		<include refid="joinSql"></include>
 		group by r.id;
 	</select>
+
+	<select id="findUnapprovedRecords"
+		resultMap="recordDetailsMap">
+		<include refid="joinSql"></include>
+		<if test=""></if>
+		where r.register_id = 1 and r.approval_status is null 
+		group by r.id; 
+	</select>
+	
+	
+
 	<resultMap id="recordDetailsMap"
 		type="com.example.app.domain.RecordDB">
 		<id property="id" column="id" />
@@ -91,17 +102,21 @@
 		r.register_id,
 		r.start_at,
 		r.end_at,
-		s.name as staff_name,
+		s.name as
+		staff_name,
 		p.attribute as patient_attribute,
 		r.consultation,
 		r.response,
 		r.approval_status,
-		group_concat(symptoms_pattern.symptoms_name separator ",") as symptoms_name
+		group_concat(symptoms_pattern.symptoms_name separator ",") as
+		symptoms_name
 		from records as r
 		join staff as s on r.staff_id = s.id
 		join patient as p
 		on r.patient_pattern = p.id
-		join symptoms on r.id = symptoms.records_id
-		join symptoms_pattern on symptoms.symptoms_id = symptoms_pattern.id
+		join symptoms on r.id =
+		symptoms.records_id
+		join symptoms_pattern on symptoms.symptoms_id =
+		symptoms_pattern.id
 	</sql>
 </mapper>

@@ -37,6 +37,11 @@ public interface RecordService {
 	//記録の登録（症状）
 	void addSymptoms(int recordsId, int symptomsId);
 	
-	//list.html用の記録を取得
+	//一覧画面用の記録を取得
 	List<RecordDB> getRecordsWithDetails();
+	
+	//一覧画面(未承認)用の記録を取得
+	List<RecordDB> getUnapprovedRecords();
+	
+	
 }

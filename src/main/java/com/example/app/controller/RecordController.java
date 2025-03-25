@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.app.domain.RecordDB;
 import com.example.app.service.RecordService;
@@ -36,7 +37,7 @@ public class RecordController {
 	public String postRegister(
 			@ModelAttribute RecordDB recordForm,
 			Model m) {
-		
+
 		Integer recordsId = service.addRecord(recordForm);
 
 		if (!recordForm.getSymptoms().isEmpty()) {
@@ -54,6 +55,29 @@ public class RecordController {
 		m.addAttribute("title", "全ての記録");
 		m.addAttribute("recordList", service.getRecordsWithDetails());
 		System.out.println(service.getRecordsWithDetails());
+
+		//承認状況によって、modal表示するコード
+
+		return "/record/list";
+	}
+
+	@PostMapping("/list")
+	public String postMethodName(
+			@RequestParam Integer loginNum,
+			@RequestParam(required = false) Integer approval,
+			Model m) {
+		System.out.println(loginNum);
+		System.out.println(approval);
+		
+		if(approval == null) {
+			m.addAttribute("title", "未承認");
+			
+			
+		}
+		
+		
+		m.addAttribute("recordList", service.getRecordsWithDetails());
+		
 		return "/record/list";
 	}
 

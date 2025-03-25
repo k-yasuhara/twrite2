@@ -26,5 +26,10 @@ public interface RecordMapper {
 	//insertした自動採番を取得
 	Integer getLastInsertId();
 	
+	//一覧画面用
 	List<RecordDB> selectAllRecordsWithDetails();
+	
+	//一覧画面（未承認）用
+	List<RecordDB> findUnapprovedRecords();
+	
 }

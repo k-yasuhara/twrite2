@@ -150,4 +150,9 @@ public class RecordServiceImpl implements RecordService {
 		return recordMapper.selectAllRecordsWithDetails();
 	}
 
+	@Override
+	public List<RecordDB> getUnapprovedRecords() {
+		return recordMapper.findUnapprovedRecords();
+	}
+
 }
