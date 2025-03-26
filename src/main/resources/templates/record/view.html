@@ -29,7 +29,7 @@
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2">
 					<input type="datetime-local" class="form-control" id="start_at" th:field="*{startAt}"
-						th:value="*{startAt}" required>
+						th:value="*{startAt}" readonly>
 				</div>
 			</div>
 			<!-- end of 相談開始時間  -->
@@ -45,7 +45,7 @@
 				</div>
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2">
-					<select class="form-select" id="staff_id" required th:field="*{staff.id}">
+					<select class="form-select" id="staff_id" readonly th:field="*{staff.id}">
 						<option th:unless="*{staff.id}" value="" disabled selected>選択してください</option>
 						<option th:each="staffType : ${staffType}" th:value="${staffType.id}"
 							th:text="${staffType.name}"></option>
@@ -66,7 +66,7 @@
 				</div>
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2">
-					<select class="form-select" id="patient_pattern" required th:field="*{patient.id}">
+					<select class="form-select" id="patient_pattern" readonly th:field="*{patient.id}">
 						<option th:unless="*{patient.id}" value="" disabled selected>選択してください</option>
 
 						<option th:each="patientType: ${patientType}" th:value="${patientType.id}"
@@ -111,7 +111,7 @@
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2 w-75" style="max-width: 500px;">
 					<textarea class="form-control" id="consultation" rows="3" th:field="*{consultation}"
-						th:text="*{consultation}"></textarea>
+						th:text="*{consultation}" readonly></textarea>
 				</div>
 			</div>
 			<!-- end of 相談内容 -->
@@ -127,7 +127,7 @@
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2 w-75" style="max-width: 500px;">
 					<textarea class="form-control" id="response" rows="3" th:field="*{response}"
-						th:text="*{response}"></textarea>
+						th:text="*{response}" readonly></textarea>
 				</div>
 			</div>
 			<!-- end of 対応内容 -->
@@ -145,7 +145,7 @@
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2">
 					<input type="datetime-local" class="form-control" id="end_at" th:field="*{endAt}"
-						th:value="*{endAt}" required>
+						th:value="*{endAt}" readonly>
 				</div>
 			</div>
 			<!-- end of 相談終了時間  -->

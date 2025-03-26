@@ -24,20 +24,21 @@ public class RecordController {
 
 	@GetMapping("/register")
 	public String getRegister(Model m) {
+		m.addAttribute("title", "新規入力");
 		RecordDB record = new RecordDB();
 		m.addAttribute("record", record);
 		m.addAttribute("staffType", service.getStaffType());
 		m.addAttribute("patientType", service.getPatientType());
 		m.addAttribute("symptomType", service.getSymptomType());
 
-		return "/record/add";
+		return "record/add";
 	}
 
 	@PostMapping("/register")
 	public String postRegister(
 			@ModelAttribute RecordDB recordForm,
 			Model m) {
-
+		m.addAttribute("title", "新規入力");
 		Integer recordsId = service.addRecord(recordForm);
 
 		if (!recordForm.getSymptoms().isEmpty()) {
@@ -57,11 +58,11 @@ public class RecordController {
 
 		//承認状況によって、modal表示するコード
 		//TODO
-		return "/record/list";
+		return "record/list";
 	}
 
 	@PostMapping("/list")
-	public String postMethodName(
+	public String postviewlist(
 			@RequestParam Integer loginNum,
 			@RequestParam(required = false) Integer approval,
 			Model m) {
@@ -74,12 +75,38 @@ public class RecordController {
 			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));
 		} else if (approval == 1) {
 			m.addAttribute("title", "承認済み");
-			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));			
+			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));
 		} else {
 			m.addAttribute("recordList", service.getRecordsWithDetails());
 		}
 
-		return "/record/list";
+		return "record/list";
 	}
 
+	@GetMapping("/view")
+	public String getview(
+			@RequestParam int id, @RequestParam String title,
+			Model m) {
+		m.addAttribute("title", "記録閲覧");
+		RecordDB record = service.findRecordsById(id);
+		m.addAttribute("record", record);
+		m.addAttribute("staffType", service.getStaffType());
+		m.addAttribute("patientType", service.getPatientType());
+		m.addAttribute("symptomType", service.getSymptomType());
+		return "record/view";
+	}
+	
+	@GetMapping("edit")
+	public String getview(@RequestParam int id,
+			Model m) {
+		m.addAttribute("title", "記録編集");
+		RecordDB record = service.findRecordsById(id);		
+		m.addAttribute("record", record);
+		m.addAttribute("staffType", service.getStaffType());
+		m.addAttribute("patientType", service.getPatientType());
+		m.addAttribute("symptomType", service.getSymptomType());
+		return "record/add";
+	}
+	
+	
 }

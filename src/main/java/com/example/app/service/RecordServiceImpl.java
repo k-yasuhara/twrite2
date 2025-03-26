@@ -155,4 +155,11 @@ public class RecordServiceImpl implements RecordService {
 		return recordMapper.findUnapprovedRecords(loginNum, approval);
 	}
 
+	@Override
+	public RecordDB findRecordsById(int id) {
+		RecordDB record = recordMapper.findById(id);
+		record.setSymptoms(symptomsMapper.findById(id));
+		return record;
+	}
+
 }

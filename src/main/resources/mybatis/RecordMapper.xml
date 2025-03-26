@@ -110,7 +110,17 @@
 		<result property="patient.attribute" column="patient_attribute" />
 		<result property="symptomsName" column="symptoms_name" />
 	</resultMap>
-
+	
+	<select id="findById" resultMap="findMap">
+		select * from records where id = #{id};
+	</select>
+	<resultMap id="findMap" type="com.example.app.domain.RecordDB">
+		<id property="id" column="id" />
+		<result property="staff.id" column="staff_id" />
+		<result property="patient.id" column="patient_pattern" />
+	
+	</resultMap>
+	
 	<sql id="joinSql">
 		select
 		r.id,

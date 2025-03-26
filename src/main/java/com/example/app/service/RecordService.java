@@ -43,5 +43,6 @@ public interface RecordService {
 	//一覧画面(未承認)用の記録を取得
 	List<RecordDB> getUnapprovedRecords(Integer loginNum, Integer approval);
 	
-	
+	//閲覧・編集画面用
+	RecordDB findRecordsById (int id);
 }

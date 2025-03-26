@@ -6,4 +6,7 @@
 		insert into symptoms (records_id,symptoms_id)
 		values(#{records_id},#{symptoms_id});
 	</insert>
+	<select id="findById" resultType="int">
+		SELECT symptoms_id FROM symptoms where records_id = #{id};
+	</select>
 </mapper>

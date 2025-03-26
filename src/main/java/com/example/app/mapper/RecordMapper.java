@@ -36,4 +36,6 @@ public interface RecordMapper {
 			@Param("loginNum") Integer loginNum,
 			@Param("approval") Integer approval);
 	
+	//閲覧・編集画面用
+	RecordDB findById(int id);
 }

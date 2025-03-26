@@ -1,8 +1,9 @@
 package com.example.app.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -13,12 +14,14 @@ public class RecordDB {
 
 	private Integer registerId;
 
-	private LocalDate registeredAt;
+	private LocalDateTime registeredAt;
 
-	private LocalDate updatedAt;
-
+	private LocalDateTime updatedAt;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime startAt;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime endAt;
 
 	private String consultation;
