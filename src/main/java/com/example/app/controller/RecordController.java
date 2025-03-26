@@ -54,10 +54,9 @@ public class RecordController {
 	public String getviewlist(Model m) {
 		m.addAttribute("title", "全ての記録");
 		m.addAttribute("recordList", service.getRecordsWithDetails());
-		System.out.println(service.getRecordsWithDetails());
 
 		//承認状況によって、modal表示するコード
-
+		//TODO
 		return "/record/list";
 	}
 
@@ -66,19 +65,20 @@ public class RecordController {
 			@RequestParam Integer loginNum,
 			@RequestParam(required = false) Integer approval,
 			Model m) {
-		System.out.println(loginNum);
-		System.out.println(approval);
-		
-		if(approval == null) {
+
+		if (approval == null) {
 			m.addAttribute("title", "未承認");
 			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));
-			return "/record/list";
-		}else {
-			m.addAttribute("recordList", service.getRecordsWithDetails());			
+		} else if (approval == 2) { //差し戻しの場合
+			m.addAttribute("title", "差し戻し");
+			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));
+		} else if (approval == 1) {
+			m.addAttribute("title", "承認済み");
+			m.addAttribute("recordList", service.getUnapprovedRecords(loginNum, approval));			
+		} else {
+			m.addAttribute("recordList", service.getRecordsWithDetails());
 		}
-		
-		
-		
+
 		return "/record/list";
 	}
 

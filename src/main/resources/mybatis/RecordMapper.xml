@@ -81,25 +81,27 @@
 	<select id="findUnapprovedRecords" resultMap="recordDetailsMap">
 		<include refid="joinSql" />
 		<choose>
-			<!-- approval == null かつ loginNum != 2 の場合 -->
+			<!-- 未承認：approval == null かつ loginNum != 2 の場合 -->
 			<when test="approval == null and loginNum != 2">
-				where r.register_id = 1 and r.approval_status is null
-				group by r.id;
+				where r.register_id != 2 and
+				r.approval_status is null
 			</when>
-			<!-- approval == null かつ loginNum == 2 の場合 -->
+			<!-- 未承認：approval == null かつ loginNum == 2 の場合 -->
 			<when test="approval == null">
 				where r.approval_status is null
-				group by r.id;
 			</when>
-			<!-- その他の場合 -->
+			<!-- 差し戻し：approval == 2 の場合 -->
+			<when test="approval == 2">
+				where r.register_id = #{loginNum} and
+				r.approval_status = 2
+			</when>
+			<!-- 承認済み:(その他の場合) -->
 			<otherwise>
+				where r.approval_status = 1
 			</otherwise>
 		</choose>
+		group by r.id;
 	</select>
-
-
-
-
 
 	<resultMap id="recordDetailsMap"
 		type="com.example.app.domain.RecordDB">

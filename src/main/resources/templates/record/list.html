@@ -26,7 +26,7 @@
 						<th scope="row">
 							<div class="row">
 								<div th:if="${!title.equals('全ての記録') && !title.equals('承認済み')}" class="col-1">
-									<a class="icon-link" th:href="@{edit?id=r.id}"> <svg
+									<a class="icon-link" th:href="@{edit?id={id}(id=${r.id})}"> <svg
 											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
 											<path
