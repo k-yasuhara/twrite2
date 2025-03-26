@@ -114,12 +114,31 @@
 	<select id="findById" resultMap="findMap">
 		select * from records where id = #{id};
 	</select>
+	
 	<resultMap id="findMap" type="com.example.app.domain.RecordDB">
 		<id property="id" column="id" />
 		<result property="staff.id" column="staff_id" />
 		<result property="patient.id" column="patient_pattern" />
 	
 	</resultMap>
+	
+	<update id="update" parameterType="com.example.app.domain.RecordDB">
+			update 
+			records
+			set
+			register_id = #{registerId}, start_at = #{startAt} , end_at = #{endAt} , patient_pattern = #{patient.id} , consultation = #{consultation} , response = #{response} , staff_id = #{staff.id} 
+			where
+			id = #{id}
+	</update>
+	<update id="updateApprovalStatus">
+			update 
+			records
+			set
+			approval_status = #{approval}
+			where
+			id = #{id}
+	</update>
+	
 	
 	<sql id="joinSql">
 		select

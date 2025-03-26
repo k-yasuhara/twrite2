@@ -47,7 +47,7 @@
 									</a>
 								</div>
 								<div th:if="${title.equals('削除')&& session.loginNum == 2}" class="col-1">
-									<a class="icon-link" href="delete?id=${r.id}"> <svg
+									<a class="icon-link" th:href="@{delete?id={id}(id=${r.id})}"> <svg
 											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
 											<path

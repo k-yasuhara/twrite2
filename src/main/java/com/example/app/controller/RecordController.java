@@ -24,7 +24,7 @@ public class RecordController {
 
 	@GetMapping("/register")
 	public String getRegister(Model m) {
-		m.addAttribute("title", "新規入力");
+		m.addAttribute("topic", "新規入力");
 		RecordDB record = new RecordDB();
 		m.addAttribute("record", record);
 		m.addAttribute("staffType", service.getStaffType());
@@ -38,7 +38,7 @@ public class RecordController {
 	public String postRegister(
 			@ModelAttribute RecordDB recordForm,
 			Model m) {
-		m.addAttribute("title", "新規入力");
+		m.addAttribute("topic", "新規入力");
 		Integer recordsId = service.addRecord(recordForm);
 
 		if (!recordForm.getSymptoms().isEmpty()) {
@@ -46,13 +46,15 @@ public class RecordController {
 			for (Integer symptoms : symptomsList) {
 				service.addSymptoms(recordsId, symptoms);
 			}
+		} else { //症状種別で何も選択されてない場合に一覧画面に表示されないため、該当なしで症状種別を入力
+			service.addSymptoms(recordsId, 0); 
 		}
 
 		return "redirect:/Twrite/top";
 	}
 
 	@GetMapping("/list")
-	public String getviewlist(Model m) {
+	public String getViewList(Model m) {
 		m.addAttribute("title", "全ての記録");
 		m.addAttribute("recordList", service.getRecordsWithDetails());
 
@@ -62,7 +64,7 @@ public class RecordController {
 	}
 
 	@PostMapping("/list")
-	public String postviewlist(
+	public String postViewList(
 			@RequestParam Integer loginNum,
 			@RequestParam(required = false) Integer approval,
 			Model m) {
@@ -84,29 +86,52 @@ public class RecordController {
 	}
 
 	@GetMapping("/view")
-	public String getview(
+	public String getView(
 			@RequestParam int id, @RequestParam String title,
 			Model m) {
-		m.addAttribute("title", "記録閲覧");
+		m.addAttribute("topic", "記録閲覧");
 		RecordDB record = service.findRecordsById(id);
+		m.addAttribute("title", title);
 		m.addAttribute("record", record);
 		m.addAttribute("staffType", service.getStaffType());
 		m.addAttribute("patientType", service.getPatientType());
 		m.addAttribute("symptomType", service.getSymptomType());
 		return "record/view";
 	}
-	
-	@GetMapping("edit")
-	public String getview(@RequestParam int id,
+
+	@GetMapping("/edit")
+	public String getEdit(@RequestParam int id,
 			Model m) {
-		m.addAttribute("title", "記録編集");
-		RecordDB record = service.findRecordsById(id);		
+		m.addAttribute("topic", "記録編集");
+		RecordDB record = service.findRecordsById(id);
 		m.addAttribute("record", record);
 		m.addAttribute("staffType", service.getStaffType());
 		m.addAttribute("patientType", service.getPatientType());
 		m.addAttribute("symptomType", service.getSymptomType());
 		return "record/add";
 	}
+
+	@PostMapping("/edit")
+	public String postEdit(
+			@ModelAttribute RecordDB recordForm,
+			Model m) {
+		service.updateRecords(recordForm);
+		service.updateSymptoms(recordForm);
+		return "redirect:/Twrite/list";
+	}
 	
+	@GetMapping("/permit")
+	public String getPermit(@RequestParam int id,
+			Model m) {
+		service.updateApprovalStatus(id, 1);
+		return "redirect:/Twrite/list";
+	}
 	
+	@GetMapping("/remand")
+	public String getRemand(@RequestParam int id,
+			Model m) {
+		service.updateApprovalStatus(id, 2);
+		return "redirect:/Twrite/list";
+	}
+
 }

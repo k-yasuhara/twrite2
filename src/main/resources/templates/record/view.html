@@ -11,7 +11,7 @@
 		<!--end of アラート表示-->
 
 		<!-- topic -->
-		<h1 class="h2 fw-bold">◆[[${title}]]</h1>
+		<h1 class="h2 fw-bold">◆[[${topic}]]</h1>
 
 		<form method="post" th:object="${record}">
 			<input type="hidden" name="registerId" th:value="${session.loginNum}">
@@ -66,7 +66,7 @@
 				</div>
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2">
-					<select class="form-select" id="patient_pattern" readonly th:field="*{patient.id}">
+					<select class="form-select" id="patient_pattern" th:field="*{patient.id}" readonly>
 						<option th:unless="*{patient.id}" value="" disabled selected>選択してください</option>
 
 						<option th:each="patientType: ${patientType}" th:value="${patientType.id}"
@@ -87,10 +87,8 @@
 				<!-- end of label枠 -->
 				<div class="col-sm-auto form-check ms-3 py-2">
 					<div class="form-check mb-2" th:each=" symptomType : ${symptomType}">
-						<input class="form-check-input" type="checkbox" 
-							 th:field="*{symptoms}"
-							th:value="${symptomType.id}"
-							th:id="${symptomType.symptomsName}">
+						<input class="form-check-input" type="checkbox" th:field="*{symptoms}"
+							th:value="${symptomType.id}" th:id="${symptomType.symptomsName}" onclick="return false;">
 
 						<label class="form-check-label" th:text="${symptomType.symptomsName}"
 							th:for="${symptomType.symptomsName}"></label>
@@ -126,8 +124,8 @@
 				</div>
 				<!-- end of label枠 -->
 				<div class="col-sm-auto ms-3 py-2 w-75" style="max-width: 500px;">
-					<textarea class="form-control" id="response" rows="3" th:field="*{response}"
-						th:text="*{response}" readonly></textarea>
+					<textarea class="form-control" id="response" rows="3" th:field="*{response}" th:text="*{response}"
+						readonly></textarea>
 				</div>
 			</div>
 			<!-- end of 対応内容 -->
@@ -149,8 +147,55 @@
 				</div>
 			</div>
 			<!-- end of 相談終了時間  -->
-			
-			<button type="submit" class="btn btn-primary ms-1 mb-3">確定</button>
+			<!--  button  -->
+			<div class="row">
+				<!-- backbutton  -->
+				<div class="col-sm-auto">
+					<button type="button" class="btn btn-secondary ms-1 mb-3" onclick="history.back()">戻る</button>
+				</div>
+				<!-- end of backbutton  -->
+				<!-- editbutton  -->
+				<th:block th:if="${!title.equals('全ての記録') && !title.equals('承認済み')}">
+					<div class="col-sm-auto">
+						<a th:href="@{edit?id={id}(id=${record.id})}">
+							<button type="button" class="btn btn-warning ms-3 mb-3">編集</button>
+						</a>
+					</div>
+				</th:block>
+				<!-- end of editbutton  -->
+				<!-- permitButton trigger modal -->
+				<th:block th:if="${session.loginNum == 2 && record.approvalStatus == null }">
+					<div class="col-sm-auto">
+						<button type="button" class="btn btn-success ms-3 mb-3" data-bs-toggle="modal"
+							data-bs-target="#permitModal">承認</button>
+					</div>
+				</th:block>
+				<!--modal-->
+				<!-- Modal -->
+				<div class="modal fade" id="permitModal" tabindex="-1" aria-labelledby="permitModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="permitModalLabel">承認作業</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">記録を承認しますか？</div>
+							<div class="modal-footer">
+								<a th:href="@{remand?id={id}(id=${record.id})}">
+									<button type="button" class="btn btn-secondary">差し戻し</button>
+								</a>
+								<a th:href="@{permit?id={id}(id=${record.id})}">
+									<button type="button" class="btn btn-primary">承認</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end of modal-->
+			</div>
+			<!-- end of button  -->
 		</form>
 	</main>
 	<!-- main -->

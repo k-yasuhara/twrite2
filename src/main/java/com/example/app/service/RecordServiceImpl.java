@@ -162,4 +162,27 @@ public class RecordServiceImpl implements RecordService {
 		return record;
 	}
 
+	@Override
+	public void updateRecords(RecordDB r) {
+		recordMapper.update(r);
+	}
+
+	@Override
+	public void updateSymptoms(RecordDB r) {
+		int recordsId = r.getId();
+		symptomsMapper.delete(recordsId);
+		
+		List<Integer> symptomsList = r.getSymptoms();
+		if(!symptomsList.isEmpty()) {
+			for(Integer s : symptomsList) {
+				symptomsMapper.insert(recordsId, s);
+			}
+		}
+	}
+
+	@Override
+	public void updateApprovalStatus(int id, int approval) {
+		recordMapper.updateApprovalStatus(id, approval);
+	}
+
 }

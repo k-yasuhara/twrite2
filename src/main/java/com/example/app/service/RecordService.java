@@ -45,4 +45,12 @@ public interface RecordService {
 	
 	//閲覧・編集画面用
 	RecordDB findRecordsById (int id);
+	
+	//記録の更新
+	void updateRecords(RecordDB r);
+	
+	//記録の更新（症状）
+	void updateSymptoms(RecordDB r);
+	
+	void updateApprovalStatus(int id , int approval);
 }
