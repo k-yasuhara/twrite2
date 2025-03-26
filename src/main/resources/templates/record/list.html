@@ -4,8 +4,6 @@
 <body>
 	<!-- main -->
 	<main class="col-10 col-sm px-4 py-4">
-		<p th:if="${modalMsg}">test</p>
-		<!--		<p th:if="${not empty modalMsg}">[[${modalMsg}]]</p>-->
 		<!-- topic -->
 		<h1 class="h2 fw-bold">◆一覧画面｜[[${title}]]</h1>
 		<div class="overflow-auto" style="max-height: 700px; min-width: 850px; overflow: auto;">
@@ -80,19 +78,20 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="ModalLabel">test</h1>
+					<h1 class="modal-title fs-5" id="ModalLabel">[[${modalTitle}]]</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">test</div>
+				<div class="modal-body">[[${modalMsg}]]</div>
 				<div class="modal-footer"></div>
 			</div>
 		</div>
 	</div>
-	<script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<th:block th:if="${modalMsg}">
+		<script>
 		const modal = new bootstrap.Modal(document.getElementById('Modal'));
 		modal.show(); // モーダルを表示
-	</script>
-	<th:block th:if="${modalMsg}">
+		</script>
 	</th:block>
 	<!-- end of Modal -->
 </body>
