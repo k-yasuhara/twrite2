@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.app.domain.RecordDB;
 import com.example.app.service.RecordService;
@@ -122,15 +123,21 @@ public class RecordController {
 	
 	@GetMapping("/permit")
 	public String getPermit(@RequestParam int id,
+			RedirectAttributes ra,
 			Model m) {
 		service.updateApprovalStatus(id, 1);
+		ra.addFlashAttribute("modalTitle", "承認状況");
+		ra.addFlashAttribute("modalMsg", "承認しました");
 		return "redirect:/Twrite/list";
 	}
 	
 	@GetMapping("/remand")
 	public String getRemand(@RequestParam int id,
+			RedirectAttributes ra,
 			Model m) {
 		service.updateApprovalStatus(id, 2);
+		ra.addFlashAttribute("modalTitle", "承認状況");
+		ra.addFlashAttribute("modalMsg", "差し戻しました");
 		return "redirect:/Twrite/list";
 	}
 
