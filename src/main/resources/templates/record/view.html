@@ -12,7 +12,13 @@
 
 		<!-- topic -->
 		<h1 class="h2 fw-bold">◆[[${topic}]]</h1>
-
+		<!--deleteAlert-->
+		<th:block th:if="${deleteMsg}">
+			<div class="alert alert-danger" role="alert">
+				[[${deleteMsg}]]
+			</div>
+		</th:block>
+		<!--end of deleteAlert-->
 		<form method="post" th:object="${record}">
 			<input type="hidden" name="registerId" th:value="${session.loginNum}">
 
@@ -155,7 +161,7 @@
 				</div>
 				<!-- end of backbutton  -->
 				<!-- editbutton  -->
-				<th:block th:if="${!title.equals('全ての記録') && !title.equals('承認済み')}">
+				<th:block th:if="${!title.equals('全ての記録') && !title.equals('承認済み')&& !title.equals('記録削除')}">
 					<div class="col-sm-auto">
 						<a th:href="@{edit?id={id}(id=${record.id})}">
 							<button type="button" class="btn btn-warning ms-3 mb-3">編集</button>
@@ -163,6 +169,13 @@
 					</div>
 				</th:block>
 				<!-- end of editbutton  -->
+				<!--deletebutton-->
+				<th:block th:if="${title.equals('記録削除')}">
+					<div class="col-sm-auto">
+						<button type="submit" class="btn btn-danger ms-1 mb-3">削除</button>
+					</div>
+				</th:block>
+				<!--end of deletebutton-->
 				<!-- permitButton trigger modal -->
 				<th:block th:if="${session.loginNum == 2 && record.approvalStatus == null }">
 					<div class="col-sm-auto">

@@ -52,5 +52,9 @@ public interface RecordService {
 	//記録の更新（症状）
 	void updateSymptoms(RecordDB r);
 	
+	//記録の承認状況の更新
 	void updateApprovalStatus(int id , int approval);
+	
+	//記録の削除
+	void deleteRecords(int id);
 }

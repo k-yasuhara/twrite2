@@ -17,7 +17,7 @@ public interface RecordMapper {
 
 	void update(RecordDB r);
 
-	void delete(RecordDB r);
+	void delete(int id);
 
 	int countLastAndThisWeek(int num);
 

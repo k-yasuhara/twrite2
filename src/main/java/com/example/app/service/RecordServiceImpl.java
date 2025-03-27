@@ -185,4 +185,9 @@ public class RecordServiceImpl implements RecordService {
 		recordMapper.updateApprovalStatus(id, approval);
 	}
 
+	@Override
+	public void deleteRecords(int id) {
+		recordMapper.delete(id);
+	}
+
 }
